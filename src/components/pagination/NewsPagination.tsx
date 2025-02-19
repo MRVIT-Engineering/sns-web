@@ -12,14 +12,16 @@ import {
 } from './pagination';
 
 interface NewsPaginationProps {
-  totalPages: number;
+  count: number;
 }
 
-export function NewsPagination({ totalPages }: NewsPaginationProps) {
+const PAGE_SIZE = 10;
+
+export function NewsPagination({ count }: NewsPaginationProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const currentPage = Number(searchParams.get('page') || '1');
-
+  const totalPages = Math.ceil(count / PAGE_SIZE);
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set('page', pageNumber.toString());

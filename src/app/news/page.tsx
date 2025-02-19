@@ -1,25 +1,25 @@
-import Navbar from '@/components/navigation/Navbar';
-import { IPost } from '@/models/post';
 import Image from 'next/image';
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from '@/components/pagination/pagination';
+
+import { IPost } from '@/models/post';
+import Navbar from '@/components/navigation/Navbar';
 import { NewsPagination } from '@/components/pagination/NewsPagination';
 
-const fetchPosts = async () => {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`);
-  const data = await response.json();
-  return data;
-};
+interface SearchParams {
+  page?: string;
+  query?: string;
+}
 
-export default async function NewsPage() {
-  const posts = await fetchPosts();
+export default async function NewsPage({ searchParams }: { searchParams: SearchParams }) {
+  const currentPage = Number(searchParams.page) || 1;
+  const searchQuery = searchParams.query || '';
+
+  const fetchPosts = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&query=${searchQuery}`);
+    const data = await response.json();
+    return data;
+  };
+
+  const { data, total } = await fetchPosts();
 
   const calculateReadTime = (post: IPost) => {
     const wordsPerMinute = 200;
@@ -41,7 +41,7 @@ export default async function NewsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {posts.map((post: IPost) => (
+          {data.map((post: IPost) => (
             <article
               key={post.id}
               className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
@@ -71,7 +71,7 @@ export default async function NewsPage() {
             </article>
           ))}
         </div>
-        <NewsPagination totalPages={10} />
+        <NewsPagination count={total} />
       </div>
     </div>
   );
