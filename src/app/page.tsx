@@ -1,10 +1,23 @@
 import { Suspense } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Navbar from '@/components/navigation/Navbar';
+import Head from 'next/head';
+import { IPost } from '@/models/post';
 
-export default function Home() {
+export default async function Home() {
+  const fetchPosts = async () => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?limit=5`);
+    const data = await response.json();
+    return data;
+  };
+  const { data } = await fetchPosts();
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+      <Head>
+        <title>Sindicatul National Solidaritatea</title>
+        <meta name="description" content="Sindicatul National Solidaritatea" />
+      </Head>
       <Suspense>
         <Navbar />
       </Suspense>
@@ -14,7 +27,7 @@ export default function Home() {
         <div className="relative h-[600px] flex items-center justify-center">
           <div className="absolute inset-0">
             <Image
-              src="https://picsum.photos/1920/1080"
+              src="/sns_hero.jpeg"
               alt="Hero background"
               fill
               priority
@@ -46,30 +59,53 @@ export default function Home() {
           <div>
             <h2 className="text-2xl font-playfair font-semibold mb-6">Știri Recente</h2>
             <div className="space-y-8">
-              {[1, 2, 3].map((post) => (
-                <article key={post} className="flex gap-6 border-b border-gray-200 pb-8 last:border-none">
-                  <div className="relative w-48 h-32 flex-shrink-0">
-                    <Image
-                      src={`https://picsum.photos/400/300?random=${post}`}
-                      alt={`Thumbnail for post ${post}`}
-                      fill
-                      className="object-cover rounded-lg"
-                      sizes="(max-width: 768px) 100vw, 192px"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-playfair font-semibold mb-2 hover:text-blue-600">
-                      <a href={`/stiri/post-${post}`}>Actualizare Sindicală Important {post}</a>
-                    </h3>
-                    <p className="text-gray-600 mb-3">
-                      Informații importante despre activitățile sindicale și actualizări pentru membrii noștri...
-                    </p>
-                    <div className="text-sm text-gray-500">
-                      <span>Aprilie {post}, 2024</span> • <span>5 min de citit</span>
+              {data.length > 0 ? (
+                data.map((post: IPost) => (
+                  <article key={post.id} className="flex gap-6 border-b border-gray-200 pb-8 last:border-none">
+                    <div className="relative w-48 h-32 flex-shrink-0">
+                      <Image
+                        src={post.headerImageUrl}
+                        alt={`Thumbnail for ${post.title}`}
+                        fill
+                        className="object-cover rounded-lg"
+                        sizes="(max-width: 768px) 100vw, 192px"
+                      />
                     </div>
-                  </div>
-                </article>
-              ))}
+                    <div className="flex-1">
+                      <h3 className="text-xl font-playfair font-semibold mb-2 hover:text-blue-600">
+                        <Link href={`/news/${post.id}`}>{post.title}</Link>
+                      </h3>
+                      <p className="text-gray-600 mb-3 line-clamp-2">{post.content}</p>
+
+                      <div className="text-sm text-gray-500">
+                        <time dateTime={post.createdAt.toString()}>
+                          {new Date(post.createdAt).toLocaleDateString('ro-RO', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
+                        </time>
+                        {/* You can add reading time if available */}
+                        <span className="mx-2">•</span>
+                        <span>5 min de citit</span>
+                      </div>
+                    </div>
+                  </article>
+                ))
+              ) : (
+                <div className="text-center py-8 text-gray-500">Nu există știri disponibile momentan.</div>
+              )}
+
+              {data.length > 0 && (
+                <div className="text-center pt-8">
+                  <Link
+                    href="/news"
+                    className="inline-block px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+                  >
+                    Vezi toate știrile
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </main>

@@ -42,7 +42,18 @@ export default function Navbar({ showSearchBar = false }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // Add this to prevent scrolling when menu is open
+  const handleDownload = () => {
+    const pdfUrl = '/adeziune.pdf';
+
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.setAttribute('download', 'adeziune.pdf');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden';
@@ -85,7 +96,12 @@ export default function Navbar({ showSearchBar = false }: Props) {
               <Link href="/contact" className="text-gray-600 hover:text-blue-600">
                 Contact
               </Link>
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">Devino Membru</button>
+              <button
+                onClick={handleDownload}
+                className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700"
+              >
+                Devino Membru
+              </button>
             </div>
 
             {/* Mobile menu button */}
@@ -169,7 +185,7 @@ export default function Navbar({ showSearchBar = false }: Props) {
             </Link>
           ))}
           <button
-            onClick={() => setIsMenuOpen(false)}
+            onClick={handleDownload}
             className={`text-3xl font-playfair text-blue-600 hover:text-blue-700
               transform transition-all duration-300 ease-in-out
               ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
