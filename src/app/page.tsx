@@ -26,7 +26,7 @@ export default async function Home() {
 
       <div className="pt-16">
         {/* Hero Section with Background Image */}
-        <div className="relative h-[600px] flex items-center justify-center">
+        <div className="relative h-[700px] flex items-center justify-center">
           <div className="absolute inset-0">
             <Image
               src="/sns_hero.jpeg"

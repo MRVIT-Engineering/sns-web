@@ -47,7 +47,7 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
                   })}
                 </time>
                 <span>•</span>
-                <span>{Math.ceil(post.content.split(' ').length / 200)} min de lectură</span>
+                <span>{Math.ceil(post.content.replace(/<[^>]*>/g, '').split(' ').length / 200)} min de lectură</span>
               </div>
             </div>
           </div>
@@ -60,11 +60,13 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
             <p className="text-xl text-gray-600 mb-8 font-medium">{post.description}</p>
 
             {/* Main Content */}
-            <div className="space-y-6 text-gray-700">
-              {post.content.split('\n\n').map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
-            </div>
+            <div
+              className="space-y-6 text-gray-700 [&>h2]:text-2xl [&>h2]:font-playfair [&>h2]:font-semibold [&>h2]:mt-8 [&>h2]:mb-4
+                [&>p]:leading-relaxed [&>ul]:list-disc [&>ul]:pl-6 [&>ol]:list-decimal [&>ol]:pl-6
+                [&>blockquote]:border-l-4 [&>blockquote]:border-blue-500 [&>blockquote]:pl-4 [&>blockquote]:italic
+                [&>img]:rounded-lg [&>img]:my-8"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
 
             {/* Navigation */}
             <div className="mt-16 pt-8 border-t border-gray-200">

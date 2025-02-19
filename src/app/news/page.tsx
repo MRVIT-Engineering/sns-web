@@ -22,15 +22,14 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
         next: { revalidate: 60 },
       });
 
+      console.log(response);
+
       if (!response.ok) {
         throw new Error('Failed to fetch posts');
       }
 
       const result = await response.json();
-      return {
-        data: result.items || [],
-        total: result.total || 0,
-      };
+      return result;
     } catch (error) {
       console.error('Error fetching posts:', error);
       return {
@@ -74,7 +73,7 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
                     alt={`News thumbnail ${post.id}`}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 2000px) 50vw, 33vw"
                   />
                 </div>
                 <div className="p-6">
