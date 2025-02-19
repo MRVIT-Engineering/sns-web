@@ -59,53 +59,47 @@ export default async function Home() {
           <div>
             <h2 className="text-2xl font-playfair font-semibold mb-6">Știri Recente</h2>
             <div className="space-y-8">
-              {data.length > 0 ? (
-                data.map((post: IPost) => (
-                  <article key={post.id} className="flex gap-6 border-b border-gray-200 pb-8 last:border-none">
-                    <div className="relative w-48 h-32 flex-shrink-0">
-                      <Image
-                        src={post.headerImageUrl}
-                        alt={`Thumbnail for ${post.title}`}
-                        fill
-                        className="object-cover rounded-lg"
-                        sizes="(max-width: 768px) 100vw, 192px"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-playfair font-semibold mb-2 hover:text-blue-600">
-                        <Link href={`/news/${post.id}`}>{post.title}</Link>
-                      </h3>
-                      <p className="text-gray-600 mb-3 line-clamp-2">{post.content}</p>
+              {data.map((post: IPost) => (
+                <article key={post.id} className="flex gap-6 border-b border-gray-200 pb-8 last:border-none">
+                  <div className="relative w-48 h-32 flex-shrink-0">
+                    <Image
+                      src={post.headerImageUrl}
+                      alt={`Thumbnail for ${post.title}`}
+                      fill
+                      className="object-cover rounded-lg"
+                      sizes="(max-width: 768px) 100vw, 192px"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-xl font-playfair font-semibold mb-2 hover:text-blue-600">
+                      <Link href={`/news/${post.id}`}>{post.title}</Link>
+                    </h3>
+                    <p className="text-gray-600 mb-3 line-clamp-2">{post.content}</p>
 
-                      <div className="text-sm text-gray-500">
-                        <time dateTime={post.createdAt.toString()}>
-                          {new Date(post.createdAt).toLocaleDateString('ro-RO', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          })}
-                        </time>
-                        {/* You can add reading time if available */}
-                        <span className="mx-2">•</span>
-                        <span>5 min de citit</span>
-                      </div>
+                    <div className="text-sm text-gray-500">
+                      <time dateTime={post.createdAt.toString()}>
+                        {new Date(post.createdAt).toLocaleDateString('ro-RO', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        })}
+                      </time>
+                      {/* You can add reading time if available */}
+                      <span className="mx-2">•</span>
+                      <span>5 min de citit</span>
                     </div>
-                  </article>
-                ))
-              ) : (
-                <div className="text-center py-8 text-gray-500">Nu există știri disponibile momentan.</div>
-              )}
+                  </div>
+                </article>
+              ))}
 
-              {data.length > 0 && (
-                <div className="text-center pt-8">
-                  <Link
-                    href="/news"
-                    className="inline-block px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-                  >
-                    Vezi toate știrile
-                  </Link>
-                </div>
-              )}
+              <div className="text-center pt-8">
+                <Link
+                  href="/news"
+                  className="inline-block px-6 py-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+                >
+                  Vezi toate știrile
+                </Link>
+              </div>
             </div>
           </div>
         </main>
