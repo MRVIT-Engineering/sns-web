@@ -9,9 +9,11 @@ interface SearchParams {
   query?: string;
 }
 
-export default async function NewsPage({ searchParams }: { searchParams: SearchParams }) {
-  const currentPage = Number(searchParams.page) || 1;
-  const searchQuery = searchParams.query || '';
+export default async function NewsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+  // Await the searchParams
+  const params = await searchParams;
+  const currentPage = Number(params.page) || 1;
+  const searchQuery = params.query || '';
 
   const fetchPosts = async () => {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&query=${searchQuery}`);

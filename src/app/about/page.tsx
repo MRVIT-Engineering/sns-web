@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Navbar from '@/components/navigation/Navbar';
+import { Suspense } from 'react';
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <Navbar showSearchBar={false} />
+      <Suspense>
+        <Navbar showSearchBar={false} />
+      </Suspense>
 
       <div className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Hero Section */}

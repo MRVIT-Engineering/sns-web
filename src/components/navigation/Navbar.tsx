@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
@@ -8,6 +8,35 @@ import { useDebouncedCallback } from 'use-debounce';
 type Props = {
   showSearchBar?: boolean;
 };
+
+function SearchInput() {
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('page', '1');
+
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
+
+  return (
+    <input
+      type="search"
+      placeholder="Caută știri..."
+      className="w-full px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-blue-500"
+      onChange={(e) => handleSearch(e.target.value)}
+      defaultValue={searchParams.get('query')?.toString()}
+    />
+  );
+}
 
 export default function Navbar({ showSearchBar = false }: Props) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -42,13 +71,9 @@ export default function Navbar({ showSearchBar = false }: Props) {
           {showSearchBar && (
             <div className="flex-1 max-w-xl px-8 hidden md:flex items-center justify-center">
               <div className="w-full">
-                <input
-                  type="search"
-                  placeholder="Caută știri..."
-                  className="w-full px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-blue-500"
-                  onChange={(e) => handleSearch(e.target.value)}
-                  defaultValue={searchParams.get('query')?.toString()}
-                />
+                <Suspense fallback={<div className="w-full h-10 bg-gray-100 rounded-full animate-pulse" />}>
+                  <SearchInput />
+                </Suspense>
               </div>
             </div>
           )}
