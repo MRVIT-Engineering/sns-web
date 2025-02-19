@@ -9,8 +9,8 @@
     "lint": "next lint"
   },
   "engines": {
-    "node": ">=20.0.0",
-    "npm": ">=10.0.0"
+    "node": "23.6.1",
+    "npm": "10.9.2"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.2",
