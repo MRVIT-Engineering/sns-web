@@ -7,11 +7,13 @@ import { IPost } from '@/models/post';
 
 export default async function Home() {
   const fetchPosts = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?limit=5`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`);
     const data = await response.json();
     return data;
   };
+
   const { data } = await fetchPosts();
+
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
       <Head>
@@ -59,38 +61,42 @@ export default async function Home() {
           <div>
             <h2 className="text-2xl font-playfair font-semibold mb-6">Știri Recente</h2>
             <div className="space-y-8">
-              {data.map((post: IPost) => (
-                <article key={post.id} className="flex gap-6 border-b border-gray-200 pb-8 last:border-none">
-                  <div className="relative w-48 h-32 flex-shrink-0">
-                    <Image
-                      src={post.headerImageUrl}
-                      alt={`Thumbnail for ${post.title}`}
-                      fill
-                      className="object-cover rounded-lg"
-                      sizes="(max-width: 768px) 100vw, 192px"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-xl font-playfair font-semibold mb-2 hover:text-blue-600">
-                      <Link href={`/news/${post.id}`}>{post.title}</Link>
-                    </h3>
-                    <p className="text-gray-600 mb-3 line-clamp-2">{post.content}</p>
-
-                    <div className="text-sm text-gray-500">
-                      <time dateTime={post.createdAt.toString()}>
-                        {new Date(post.createdAt).toLocaleDateString('ro-RO', {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        })}
-                      </time>
-                      {/* You can add reading time if available */}
-                      <span className="mx-2">•</span>
-                      <span>5 min de citit</span>
+              {data && data.length > 0 ? (
+                data.map((post: IPost) => (
+                  <article key={post.id} className="flex gap-6 border-b border-gray-200 pb-8 last:border-none">
+                    <div className="relative w-48 h-32 flex-shrink-0">
+                      <Image
+                        src={post.headerImageUrl}
+                        alt={`Thumbnail for ${post.title}`}
+                        fill
+                        className="object-cover rounded-lg"
+                        sizes="(max-width: 768px) 100vw, 192px"
+                      />
                     </div>
-                  </div>
-                </article>
-              ))}
+                    <div className="flex-1">
+                      <h3 className="text-xl font-playfair font-semibold mb-2 hover:text-blue-600">
+                        <Link href={`/news/${post.id}`}>{post.title}</Link>
+                      </h3>
+                      <p className="text-gray-600 mb-3 line-clamp-2">{post.content}</p>
+
+                      <div className="text-sm text-gray-500">
+                        <time dateTime={post.createdAt.toString()}>
+                          {new Date(post.createdAt).toLocaleDateString('ro-RO', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })}
+                        </time>
+                        {/* You can add reading time if available */}
+                        <span className="mx-2">•</span>
+                        <span>5 min de citit</span>
+                      </div>
+                    </div>
+                  </article>
+                ))
+              ) : (
+                <p className="text-center text-gray-600">Nu există știri disponibile momentan.</p>
+              )}
 
               <div className="text-center pt-8">
                 <Link

@@ -176,20 +176,20 @@ export default function Navbar({ showSearchBar = false }: Props) {
               key={link.href}
               href={link.href}
               onClick={() => setIsMenuOpen(false)}
-              className={`text-3xl font-playfair text-gray-800 hover:text-blue-600
+              style={{ transitionDelay: `${index * 100}ms` }}
+              className="text-3xl font-playfair text-gray-800 hover:text-blue-600
                 transform transition-all duration-300 ease-in-out
-                ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-                delay-[${index * 100}ms]`}
+                ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
             >
               {link.text}
             </Link>
           ))}
           <button
-            onClick={handleDownload}
-            className={`text-3xl font-playfair text-blue-600 hover:text-blue-700
+            onClick={() => setIsMenuOpen(false)}
+            style={{ transitionDelay: '400ms' }}
+            className="text-3xl font-playfair text-blue-600 hover:text-blue-700
               transform transition-all duration-300 ease-in-out
-              ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}
-              delay-[400ms]`}
+              ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
           >
             Devino Membru
           </button>
