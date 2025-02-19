@@ -1,7 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 type Props = {
   showSearchBar?: boolean;
@@ -9,6 +11,23 @@ type Props = {
 
 export default function Navbar({ showSearchBar = false }: Props) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
+  const pathname = usePathname();
+
+  const handleSearch = useDebouncedCallback((term: string) => {
+    console.log(`Searching... ${term}`);
+    const params = new URLSearchParams(searchParams);
+    params.set('page', '1');
+
+    if (term) {
+      params.set('query', term);
+    } else {
+      params.delete('query');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  }, 300);
 
   return (
     <nav className="bg-white shadow-sm fixed w-full z-10">
@@ -16,7 +35,7 @@ export default function Navbar({ showSearchBar = false }: Props) {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-blue-600">SNS</span>
+              <span className="text-xl font-playfair text-blue-600">SnS</span>
             </Link>
           </div>
 
@@ -27,6 +46,8 @@ export default function Navbar({ showSearchBar = false }: Props) {
                   type="search"
                   placeholder="Caută știri..."
                   className="w-full px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-blue-500"
+                  onChange={(e) => handleSearch(e.target.value)}
+                  defaultValue={searchParams.get('query')?.toString()}
                 />
               </div>
             </div>
@@ -42,9 +63,7 @@ export default function Navbar({ showSearchBar = false }: Props) {
             <Link href="/contact" className="text-gray-600 hover:text-blue-600">
               Contact
             </Link>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">
-              Devino Membru
-            </button>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">Devino Membru</button>
           </div>
 
           {/* Mobile menu button */}
@@ -53,12 +72,7 @@ export default function Navbar({ showSearchBar = false }: Props) {
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 rounded-md text-gray-600 hover:text-blue-600"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -68,18 +82,8 @@ export default function Navbar({ showSearchBar = false }: Props) {
               </svg>
             </button>
             <button className="p-2 rounded-md text-gray-600 hover:text-blue-600 ml-2">
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
           </div>
@@ -92,6 +96,8 @@ export default function Navbar({ showSearchBar = false }: Props) {
               type="search"
               placeholder="Caută știri..."
               className="w-full px-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:border-blue-500"
+              onChange={(e) => handleSearch(e.target.value)}
+              defaultValue={searchParams.get('query')?.toString()}
             />
           </div>
         )}
