@@ -12,13 +12,7 @@ export default function Footer() {
           {/* Brand Section */}
           <div className="col-span-1 text-center md:text-left">
             <Link href="/" className="flex items-center mb-4 justify-center md:justify-start">
-              <Image
-                src="/logo.png"
-                alt="Sindicatul Național Solidaritatea Logo"
-                width={250}
-                height={250}
-                className="w-auto"
-              />
+              <Image src="/logo.png" alt="Sindicatul Național Solidaritatea Logo" width={100} height={100} />
             </Link>
             <p className="text-gray-600 text-sm">
               Sindicatul Național Solidaritatea - Pentru drepturile și bunăstarea membrilor noștri.
