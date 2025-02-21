@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { IPost } from '@/models/post';
 import Navbar from '@/components/navigation/Navbar';
 import { NewsPagination } from '@/components/pagination/NewsPagination';
-import Footer from '@/components/common/Footer';
 
 interface SearchParams {
   page?: string;
