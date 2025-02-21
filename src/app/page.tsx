@@ -7,7 +7,7 @@ import { IPost } from '@/models/post';
 
 export default async function Home() {
   const fetchPosts = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/post`);
     const data = await response.json();
     return data;
   };
@@ -109,23 +109,6 @@ export default async function Home() {
             </div>
           </div>
         </main>
-
-        <footer className="bg-gray-50 py-8">
-          <div className="max-w-2xl mx-auto px-4 flex gap-6 flex-wrap items-center justify-center text-sm text-gray-600">
-            <a href="/despre" className="hover:text-blue-600">
-              Despre Noi
-            </a>
-            <a href="/membri" className="hover:text-blue-600">
-              Membri
-            </a>
-            <a href="/contact" className="hover:text-blue-600">
-              Contact
-            </a>
-            <a href="/resurse" className="hover:text-blue-600">
-              Resurse
-            </a>
-          </div>
-        </footer>
       </div>
     </div>
   );

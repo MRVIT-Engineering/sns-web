@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { IPost } from '@/models/post';
 import Navbar from '@/components/navigation/Navbar';
 import { NewsPagination } from '@/components/pagination/NewsPagination';
+import Footer from '@/components/common/Footer';
 
 interface SearchParams {
   page?: string;
@@ -11,18 +12,14 @@ interface SearchParams {
 }
 
 export default async function NewsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
-  // Await the searchParams
   const params = await searchParams;
-  const currentPage = Number(params.page) || 1;
   const searchQuery = params.query || '';
+  const page = params.page || 1;
 
   const fetchPosts = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post?page=${currentPage}&query=${searchQuery}`, {
-        next: { revalidate: 60 },
-      });
-
-      console.log(response);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/post?page=${page}&query=${searchQuery}`);
+      console.log('Response is ', response);
 
       if (!response.ok) {
         throw new Error('Failed to fetch posts');

@@ -4,6 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import Image from 'next/image';
 
 type Props = {
   showSearchBar?: boolean;
@@ -72,7 +73,13 @@ export default function Navbar({ showSearchBar = false }: Props) {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <Link href="/" className="flex items-center">
-                <span className="text-xl font-playfair text-blue-600">SnS</span>
+                <Image
+                  src="/logo.png"
+                  alt="Sindicatul Național Solidaritatea Logo"
+                  width={120}
+                  height={120}
+                  className="h-14 w-auto"
+                />
               </Link>
             </div>
 
