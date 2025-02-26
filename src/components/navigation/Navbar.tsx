@@ -67,95 +67,84 @@ export default function Navbar({ showSearchBar = false }: Props) {
   }, [isMenuOpen]);
 
   return (
-    <>
-      <nav className="bg-white shadow-sm fixed w-full z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center justify-center flex-1 sm:flex-none">
-              <Link href="/" className="flex items-center justify-center">
-                <Image
-                  src="/logo.png"
-                  alt="Sindicatul Național Solidaritatea Logo"
-                  width={120}
-                  height={120}
-                  className="h-14 w-auto"
-                />
-              </Link>
-            </div>
+    <nav className="bg-white shadow-sm fixed w-full z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16">
+          <div className="flex items-center pl-2 sm:pl-0">
+            <Link href="/" className="flex items-center">
+              <Image src="/logo.png" alt="SNS Logo" width={40} height={40} className="object-contain" />
+            </Link>
+          </div>
 
-            {showSearchBar && (
-              <div className="flex-1 max-w-xl px-8 hidden md:flex items-center justify-center">
-                <div className="w-full">
-                  <Suspense fallback={<div className="w-full h-10 bg-gray-100 rounded-full animate-pulse" />}>
-                    <SearchInput />
-                  </Suspense>
-                </div>
+          {showSearchBar && (
+            <div className="flex-1 max-w-xl px-8 hidden md:flex items-center justify-center">
+              <div className="w-full">
+                <Suspense fallback={<div className="w-full h-10 bg-gray-100 rounded-full animate-pulse" />}>
+                  <SearchInput />
+                </Suspense>
               </div>
-            )}
-
-            <div className="hidden sm:flex sm:items-center sm:space-x-8">
-              <Link href="/about" className="text-gray-600 hover:text-blue-600">
-                Despre Noi
-              </Link>
-              <Link href="/news" className="text-gray-600 hover:text-blue-600">
-                Știri
-              </Link>
-              <Link href="/contact" className="text-gray-600 hover:text-blue-600">
-                Contact
-              </Link>
-              <button
-                onClick={handleDownload}
-                className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700"
-              >
-                Devino Membru
-              </button>
             </div>
+          )}
 
-            {/* Mobile menu button */}
-            <div className="flex items-center sm:hidden">
-              {showSearchBar && (
-                <button
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className="p-2 rounded-md text-gray-600 hover:text-blue-600"
-                >
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                </button>
-              )}
+          <div className="hidden sm:flex sm:items-center sm:space-x-8">
+            <Link href="/about" className="text-gray-600 hover:text-blue-600">
+              Despre Noi
+            </Link>
+            <Link href="/news" className="text-gray-600 hover:text-blue-600">
+              Știri
+            </Link>
+            <Link href="/contact" className="text-gray-600 hover:text-blue-600">
+              Contact
+            </Link>
+            <button
+              onClick={handleDownload}
+              className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700"
+            >
+              Devino Membru
+            </button>
+          </div>
+
+          <div className="flex items-center sm:hidden pr-2">
+            {showSearchBar && (
               <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 rounded-md text-gray-600 hover:text-blue-600 ml-2"
+                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                className="p-2 rounded-md text-gray-600 hover:text-blue-600"
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
               </button>
-            </div>
+            )}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 rounded-md text-gray-600 hover:text-blue-600 ml-2"
+            >
+              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
+                />
+              </svg>
+            </button>
           </div>
-
-          {/* Mobile search bar */}
-          {isSearchOpen && showSearchBar && (
-            <div className="md:hidden px-2 pb-3">
-              <Suspense>
-                <SearchInput />
-              </Suspense>
-            </div>
-          )}
         </div>
-      </nav>
 
-      {/* Animated Full-screen Mobile Navigation Menu */}
+        {isSearchOpen && showSearchBar && (
+          <div className="md:hidden px-2 pb-3">
+            <Suspense>
+              <SearchInput />
+            </Suspense>
+          </div>
+        )}
+      </div>
+
       <div
         className={`fixed inset-0 bg-white transform transition-transform duration-300 ease-in-out z-50 sm:hidden ${
           isMenuOpen ? 'translate-y-0' : '-translate-y-full'
@@ -202,6 +191,6 @@ export default function Navbar({ showSearchBar = false }: Props) {
           </button>
         </div>
       </div>
-    </>
+    </nav>
   );
 }

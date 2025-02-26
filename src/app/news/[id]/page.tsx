@@ -5,7 +5,7 @@ import Navbar from '@/components/navigation/Navbar';
 import { IPost } from '@/models/post';
 
 async function getPost(id: string) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/post/${id}`);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/post/${id}`);
   if (!response.ok) {
     throw new Error('Failed to fetch post');
   }
