@@ -239,9 +239,10 @@ export default function Navbar({ showSearchBar = false }: Props) {
       </div>
 
       <div
-        className={`fixed inset-0 bg-white transform transition-transform duration-300 ease-in-out z-50 sm:hidden ${
-          isMenuOpen ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        className={`fixed inset-0 bg-white transform transition-transform duration-300 ease-in-out z-50 sm:hidden`}
+        style={{
+          transform: isMenuOpen ? 'translateY(0)' : 'translateY(-1000px)',
+        }}
       >
         <div className="h-16 flex justify-end items-center px-4">
           <button
@@ -260,9 +261,9 @@ export default function Navbar({ showSearchBar = false }: Props) {
             href="/"
             onClick={() => setIsMenuOpen(false)}
             style={{ transitionDelay: '0ms' }}
-            className="text-3xl font-playfair text-gray-800 hover:text-blue-600
+            className={`text-3xl font-playfair text-gray-800 hover:text-blue-600
               transform transition-all duration-300 ease-in-out
-              ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4  opacity-0'}"
+              ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4  opacity-0'}`}
           >
             Acasă
           </Link>
