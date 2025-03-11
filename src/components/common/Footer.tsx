@@ -14,9 +14,6 @@ export default function Footer() {
             <Link href="/" className="flex items-center mb-4 justify-center md:justify-start">
               <Image src="/logo.png" alt="Sindicatul Național Solidaritatea Logo" width={100} height={100} />
             </Link>
-            <p className="text-gray-600 text-sm">
-              Sindicatul Național Solidaritatea - Pentru drepturile și bunăstarea membrilor noștri.
-            </p>
           </div>
 
           {/* Quick Links */}
@@ -42,7 +39,7 @@ export default function Footer() {
           </div>
 
           {/* Resources */}
-          <div className="col-span-1 text-center md:text-left">
+          {/* <div className="col-span-1 text-center md:text-left">
             <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4">Resurse</h3>
             <ul className="space-y-3">
               <li>
@@ -64,7 +61,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Contact Info */}
           <div className="col-span-1 text-center md:text-left">

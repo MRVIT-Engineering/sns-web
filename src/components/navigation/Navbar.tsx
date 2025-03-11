@@ -1,14 +1,79 @@
 'use client';
 
-import { Suspense, useState, useEffect } from 'react';
+import { Suspense, useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import Image from 'next/image';
+import { useDownload } from '@/hooks/useDownload';
 
 type Props = {
   showSearchBar?: boolean;
 };
+
+// Add a type for dropdown items
+type DropdownItem = {
+  text: string;
+  href: string;
+};
+
+// Add a type for navigation items that can be either simple links or dropdowns
+type NavItem = {
+  text: string;
+  href: string;
+  dropdown?: DropdownItem[];
+};
+
+// Create a dropdown component
+function NavDropdown({ item }: { item: NavItem }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button onClick={() => setIsOpen(!isOpen)} className="flex items-center text-gray-600 hover:text-blue-600">
+        {item.text}
+        <svg
+          className={`ml-1 h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-20">
+          {item.dropdown?.map((dropdownItem, index) => (
+            <Link
+              key={index}
+              href={dropdownItem.href}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+              onClick={() => setIsOpen(false)}
+            >
+              {dropdownItem.text}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 function SearchInput() {
   const searchParams = useSearchParams();
@@ -43,17 +108,46 @@ export default function Navbar({ showSearchBar = false }: Props) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const handleDownload = () => {
-    const pdfUrl = '/adeziune.pdf';
+  const navItems: NavItem[] = [
+    {
+      text: 'Prezentare',
+      href: '/wip',
+      dropdown: [
+        { text: 'Despre Noi', href: '/about' },
+        { text: 'Conducere SNS', href: '/wip' },
+        { text: 'Grupe sindicale', href: '/wip' },
+        { text: 'Afilieri', href: '/wip' },
+      ],
+    },
+    {
+      text: 'Activitate sindicală',
+      href: '/wip',
+      dropdown: [
+        { text: 'Actiuni in instantele de judecata', href: '/wip' },
+        { text: 'Actiuni de protest', href: '/wip' },
+        { text: 'Altele ( statut )', href: '/wip' },
+        { text: 'Altele', href: '/wip' },
+      ],
+    },
+    {
+      text: 'Știri',
+      href: '/news',
+      dropdown: [
+        { text: 'Informatii pentru membrii', href: '/wip' },
+        { text: 'Altele', href: '/news' },
+      ],
+    },
+    {
+      text: 'Contact',
+      href: '/contact',
+      dropdown: [
+        { text: 'Intreaba SNS', href: '/contact' },
+        { text: 'Altele', href: '/contact' },
+      ],
+    },
+  ];
 
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = pdfUrl;
-    link.setAttribute('download', 'adeziune.pdf');
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  const { download } = useDownload('/adeziune.pdf');
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -87,19 +181,16 @@ export default function Navbar({ showSearchBar = false }: Props) {
           )}
 
           <div className="hidden sm:flex sm:items-center sm:space-x-8">
-            <Link href="/about" className="text-gray-600 hover:text-blue-600">
-              Despre Noi
-            </Link>
-            <Link href="/news" className="text-gray-600 hover:text-blue-600">
-              Știri
-            </Link>
-            <Link href="/contact" className="text-gray-600 hover:text-blue-600">
-              Contact
-            </Link>
-            <button
-              onClick={handleDownload}
-              className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700"
-            >
+            {navItems.map((item, index) =>
+              item.dropdown ? (
+                <NavDropdown key={index} item={item} />
+              ) : (
+                <Link key={index} href={item.href} className="text-gray-600 hover:text-blue-600">
+                  {item.text}
+                </Link>
+              ),
+            )}
+            <button onClick={download} className="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">
               Devino Membru
             </button>
           </div>
@@ -161,28 +252,67 @@ export default function Navbar({ showSearchBar = false }: Props) {
           </button>
         </div>
 
-        <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] space-y-8">
-          {[
-            { href: '/', text: 'Acasă' },
-            { href: '/about', text: 'Despre Noi' },
-            { href: '/news', text: 'Știri' },
-            { href: '/contact', text: 'Contact' },
-          ].map((link, index) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMenuOpen(false)}
-              style={{ transitionDelay: `${index * 100}ms` }}
-              className="text-3xl font-playfair text-gray-800 hover:text-blue-600
-                transform transition-all duration-300 ease-in-out
-                ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
-            >
-              {link.text}
-            </Link>
-          ))}
-          <button
+        <div className="flex flex-col items-center justify-center h-[calc(100vh-4rem)] space-y-8 overflow-y-auto">
+          <Link
+            href="/"
             onClick={() => setIsMenuOpen(false)}
-            style={{ transitionDelay: '400ms' }}
+            style={{ transitionDelay: '0ms' }}
+            className="text-3xl font-playfair text-gray-800 hover:text-blue-600
+              transform transition-all duration-300 ease-in-out
+              ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
+          >
+            Acasă
+          </Link>
+
+          {navItems.map((item, index) => (
+            <div key={index} className="flex flex-col items-center">
+              {item.dropdown ? (
+                <>
+                  <div
+                    style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+                    className="text-3xl font-playfair text-gray-800 mb-2
+                      transform transition-all duration-300 ease-in-out
+                      ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
+                  >
+                    {item.text}
+                  </div>
+                  <div className="flex flex-col items-center space-y-2">
+                    {item.dropdown.map((dropdownItem, dropIndex) => (
+                      <Link
+                        key={dropIndex}
+                        href={dropdownItem.href}
+                        onClick={() => setIsMenuOpen(false)}
+                        style={{ transitionDelay: `${(index + 1) * 100 + 50}ms` }}
+                        className="text-xl font-playfair text-gray-600 hover:text-blue-600
+                          transform transition-all duration-300 ease-in-out
+                          ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
+                      >
+                        {dropdownItem.text}
+                      </Link>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <Link
+                  href={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  style={{ transitionDelay: `${(index + 1) * 100}ms` }}
+                  className="text-3xl font-playfair text-gray-800 hover:text-blue-600
+                    transform transition-all duration-300 ease-in-out
+                    ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"
+                >
+                  {item.text}
+                </Link>
+              )}
+            </div>
+          ))}
+
+          <button
+            onClick={() => {
+              download();
+              setIsMenuOpen(false);
+            }}
+            style={{ transitionDelay: `${(navItems.length + 1) * 100}ms` }}
             className="text-3xl font-playfair text-blue-600 hover:text-blue-700
               transform transition-all duration-300 ease-in-out
               ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}"

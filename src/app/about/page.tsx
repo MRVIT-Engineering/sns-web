@@ -1,6 +1,8 @@
-import Image from 'next/image';
-import Navbar from '@/components/navigation/Navbar';
 import { Suspense } from 'react';
+import Image from 'next/image';
+
+import Navbar from '@/components/navigation/Navbar';
+import { AboutCallToAction } from '@/components/common/AboutCallToAction';
 
 export default function AboutPage() {
   return (
@@ -26,12 +28,32 @@ export default function AboutPage() {
             <section>
               <h2 className="text-2xl font-playfair font-semibold mb-4">Misiunea Noastră</h2>
               <p className="text-gray-600">
-                Misiunea noastră este să reprezentăm și să protejăm interesele membrilor noștri, asigurând condiții de
-                muncă echitabile și drepturi fundamentale pentru toți.
+                Sindicatul National Solidaritatea s-a infiintat in anul 2017, la solicitarea mai multor angajati din
+                ANAF, angajati nemultumiti de reprezentarea sindicala oferita de alte organizatii pana in acel moment.
+                <br />
+                <br />
+                Este un sindicat cu acoperire nationala, care reuneste in principal angajati din cadrul Ministerului
+                Finantelor, ANAF si institutiile subordonate acestora.
+                <br />
+                <br />
+                In anul 2022 SNS a realizat o fuziune prin absorbtie cu Sindicatul Finantistilor din Administratia
+                Fiscala. SNS este membru fondator al Federatiei Solidaritatea, federatie care este reprezentativa la
+                nivelul ANAF si a unitatilor subordonate,iar aceasta este afiliata la Confederatia Blocul National
+                Sindical.
+                <br />
+                <br />
+                Suntem un sindicat dinamic, care pune pe primul loc membrul si drepturile acestuia. Pe parcursul
+                activitatii noastre am initiat si finalizat mai multe procese la nivel national. In prezent avem
+                aproximativ 100 actiuni pe rolul instantelor de judecata.
+                <br />
+                <br />
+                SNS isi propune sa devina cea mai importanta organizatie de profil din sistemul administrativ. Daca si
+                tu doresti acest lucru, poti sa ni te alaturi completand adeziunea de la sectiunea Devino membru. Cu
+                ajutorul tau vom fi mai puternici, ceea ce inseamna ca iti vom putea apara mult mai bine drepturile.
               </p>
             </section>
 
-            <section>
+            {/* <section>
               <h2 className="text-2xl font-playfair font-semibold mb-4">Valorile Noastre</h2>
               <ul className="space-y-4 text-gray-600">
                 <li className="flex items-start">
@@ -47,7 +69,7 @@ export default function AboutPage() {
                   <span>Profesionalism și excelență în reprezentare</span>
                 </li>
               </ul>
-            </section>
+            </section> */}
           </div>
 
           {/* Right Column - Image */}
@@ -70,7 +92,7 @@ export default function AboutPage() {
               <div className="text-gray-600">Membri Activi</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-blue-600 mb-2">5</div>
+              <div className="text-4xl font-bold text-blue-600 mb-2">{new Date().getFullYear() - 2017}</div>
               <div className="text-gray-600">Ani de Activitate</div>
             </div>
             <div>
@@ -81,16 +103,7 @@ export default function AboutPage() {
         </div>
 
         {/* Call to Action */}
-        <div className="text-center mb-16">
-          <h2 className="text-2xl font-playfair font-semibold mb-4">Alătură-te Sindicatului Nostru</h2>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Împreună suntem mai puternici. Devino membru al Sindicatului Național Solidaritatea și beneficiază de
-            protecție și suport profesional.
-          </p>
-          <button className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors">
-            Devino Membru
-          </button>
-        </div>
+        <AboutCallToAction />
       </div>
     </div>
   );

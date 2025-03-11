@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import Navbar from '@/components/navigation/Navbar';
 import Head from 'next/head';
+
+import Navbar from '@/components/navigation/Navbar';
 import { IPost } from '@/models/post';
 
 export default async function Home() {
@@ -41,7 +42,7 @@ export default async function Home() {
             <h1 className="text-5xl sm:text-6xl font-playfair font-bold mb-8">Sindicatul National Solidaritatea</h1>
 
             {/* Newsletter Signup - hidden on mobile */}
-            <div className="hidden md:block bg-white/10 backdrop-blur-md p-6 rounded-lg">
+            {/* <div className="hidden md:block bg-white/10 backdrop-blur-md p-6 rounded-lg">
               <h2 className="text-xl font-playfair font-semibold mb-3">Abonează-te la newsletter</h2>
               <p className="text-gray-100 mb-4">Primește cele mai recente actualizări direct în inbox-ul tău.</p>
               <form className="flex gap-2 max-w-md mx-auto">
@@ -52,7 +53,7 @@ export default async function Home() {
                 />
                 <button className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700">Abonează-te</button>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
 

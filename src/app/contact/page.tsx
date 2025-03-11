@@ -3,7 +3,7 @@ import Navbar from '@/components/navigation/Navbar';
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+    <div className="h-[75vh] font-[family-name:var(--font-geist-sans)]">
       <Suspense>
         <Navbar showSearchBar={false} />
       </Suspense>
