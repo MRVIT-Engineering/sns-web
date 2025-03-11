@@ -162,11 +162,11 @@ export default function Navbar({ showSearchBar = false }: Props) {
 
   return (
     <nav className="bg-white shadow-sm fixed w-full z-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center pl-2 sm:pl-0">
+          <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="SNS Logo" width={40} height={40} className="object-contain" />
+              <Image src="/logo.png" alt="SNS Logo" width={36} height={36} className="object-contain" />
             </Link>
           </div>
 
@@ -195,13 +195,13 @@ export default function Navbar({ showSearchBar = false }: Props) {
             </button>
           </div>
 
-          <div className="flex items-center sm:hidden pr-2">
+          <div className="flex items-center sm:hidden">
             {showSearchBar && (
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 rounded-md text-gray-600 hover:text-blue-600"
+                className="p-1 rounded-md text-gray-600 hover:text-blue-600"
               >
-                <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -213,9 +213,9 @@ export default function Navbar({ showSearchBar = false }: Props) {
             )}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-600 hover:text-blue-600 ml-2"
+              className="p-1 rounded-md text-gray-600 hover:text-blue-600 ml-1"
             >
-              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
