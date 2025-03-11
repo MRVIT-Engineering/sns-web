@@ -75,7 +75,7 @@ export default function AboutPage() {
           {/* Right Column - Image */}
           <div className="relative h-[400px] md:h-full rounded-lg overflow-hidden">
             <Image
-              src="https://picsum.photos/800/600"
+              src="/about.jpeg"
               alt="About us image"
               fill
               className="object-cover"
