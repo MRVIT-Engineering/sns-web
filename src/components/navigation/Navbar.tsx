@@ -166,7 +166,7 @@ export default function Navbar({ showSearchBar = false }: Props) {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <Image src="/logo.png" alt="SNS Logo" width={36} height={36} className="object-contain" />
+              <Image src="/logo.png" alt="SNS Logo" width={32} height={32} className="object-contain" />
             </Link>
           </div>
 
@@ -199,9 +199,10 @@ export default function Navbar({ showSearchBar = false }: Props) {
             {showSearchBar && (
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-1 rounded-md text-gray-600 hover:text-blue-600"
+                className="p-2 rounded-md text-gray-600 hover:text-blue-600 mr-1"
+                aria-label="Search"
               >
-                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -213,9 +214,10 @@ export default function Navbar({ showSearchBar = false }: Props) {
             )}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-1 rounded-md text-gray-600 hover:text-blue-600 ml-1"
+              className="p-2 rounded-md text-gray-600 hover:text-blue-600"
+              aria-label="Menu"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -244,7 +246,8 @@ export default function Navbar({ showSearchBar = false }: Props) {
         <div className="h-16 flex justify-end items-center px-4">
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="p-2 rounded-md text-gray-600 hover:text-blue-600 transition-colors"
+            className="p-3 rounded-md text-gray-600 hover:text-blue-600 transition-colors"
+            aria-label="Close menu"
           >
             <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
