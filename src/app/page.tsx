@@ -8,12 +8,20 @@ import { IPost } from '@/models/post';
 
 export default async function Home() {
   const fetchPosts = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/post`);
-    const data = await response.json();
-    return data;
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/post`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch posts');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      return { data: [] };
+    }
   };
 
-  const { data } = await fetchPosts();
+  const { data = [] } = await fetchPosts();
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">

@@ -11,7 +11,7 @@ export default function StatutPage() {
         <h1 className="text-4xl font-playfair font-bold mb-8 text-center">
           STATUTUL
           <br />
-          "SINDICATULUI NATIONAL SOLIDARITATEA"
+          &quot;SINDICATULUI NATIONAL SOLIDARITATEA&quot;
           <br />
           <span className="text-lg font-normal">Adoptat in Adunarea Generala din 2025</span>
         </h1>
