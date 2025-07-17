@@ -10,6 +10,7 @@ export interface IPost {
   createdAt: Date;
   updatedAt: Date;
   headerImageUrl: string;
+  category?: string; // Add category field
 }
 
 export interface IComment {
@@ -18,4 +19,9 @@ export interface IComment {
   author: IUser;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ICategory {
+  id: number;
+  title: string;
 }

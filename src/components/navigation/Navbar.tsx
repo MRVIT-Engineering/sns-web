@@ -114,18 +114,18 @@ export default function Navbar({ showSearchBar = false }: Props) {
       href: '/wip',
       dropdown: [
         { text: 'Despre Noi', href: '/about' },
-        { text: 'Conducere SNS', href: '/wip' },
+        { text: 'Conducere SNS', href: '/leadership' },
         { text: 'Grupe sindicale', href: '/wip' },
-        { text: 'Afilieri', href: '/wip' },
+        { text: 'Afilieri', href: '/affiliations' },
       ],
     },
     {
       text: 'Activitate sindicală',
       href: '/wip',
       dropdown: [
-        { text: 'Actiuni in instantele de judecata', href: '/wip' },
-        { text: 'Actiuni de protest', href: '/wip' },
-        { text: 'Altele ( statut )', href: '/wip' },
+        { text: 'Actiuni in instantele de judecata', href: '/court-actions' },
+        { text: 'Actiuni de protest', href: '/proteste' },
+        { text: 'Altele ( statut )', href: '/statut' },
         { text: 'Altele', href: '/wip' },
       ],
     },

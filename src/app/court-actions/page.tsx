@@ -4,28 +4,24 @@ import Link from 'next/link';
 import { IPost } from '@/models/post';
 import Navbar from '@/components/navigation/Navbar';
 import { NewsPagination } from '@/components/pagination/NewsPagination';
-import CategoryFilter from '@/components/news/CategoryFilter';
 
 interface SearchParams {
   page?: string;
   query?: string;
-  category?: string;
 }
 
-export default async function NewsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+export default async function CourtActionsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
   const searchQuery = params.query || '';
   const page = params.page || 1;
 
-  // Parse multiple categories from URL parameter
-  const selectedCategories = params.category ? params.category.split(',').filter(Boolean) : [];
+  // Hardcoded category for court actions
+  const COURT_ACTIONS_CATEGORY = 'court-actions';
 
   const fetchPosts = async () => {
     try {
-      const categoryParam = selectedCategories.length > 0 ? `&categories=${selectedCategories.join(',')}` : '';
-      console.log('Category param is ', categoryParam);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/post?page=${page}&limit=25&query=${searchQuery}${categoryParam}`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/post?page=${page}&limit=25&query=${searchQuery}&category=${COURT_ACTIONS_CATEGORY}`,
       );
 
       if (!response.ok) {
@@ -43,25 +39,7 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
     }
   };
 
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/post/category`);
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch categories');
-      }
-
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-      return [];
-    }
-  };
-
-  const [{ data = [], total = 0 }, categories] = await Promise.all([fetchPosts(), fetchCategories()]);
-
-  console.log('Data is ', data);
+  const { data = [], total = 0 } = await fetchPosts();
 
   const calculateReadTime = (post: IPost) => {
     const wordsPerMinute = 200;
@@ -76,14 +54,20 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
 
       <div className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="mb-12 text-center">
-          <h1 className="text-4xl font-playfair font-bold mb-4">Știri și Actualizări</h1>
+          <h1 className="text-4xl font-playfair font-bold mb-4">
+            Acțiuni în instanțele de judecată promovate de către SNS
+          </h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            Ultimele știri și actualizări despre activitățile sindicale și informații importante pentru membrii noștri.
+            SNS a promovat până în prezent peste o sută de acțiuni în instanțele de judecată din România. Marea
+            majoritate a acestor acțiuni au fost promovate în vederea recuperării unor drepturi salariale, dar nu s-au
+            limitat doar la acestea.
+          </p>
+          <p className="text-gray-600 max-w-2xl mx-auto mt-4">
+            În ultimii ani, SNS a recuperat de la angajatori, în folosul membrilor săi, drepturi bănești de zeci de
+            milioane de lei, cerând instanțelor de judecată acordarea tuturor drepturilor bănești prevăzute de
+            legislație, dar nerecunoscute sau neacordate de către angajator.
           </p>
         </div>
-
-        {/* Category Filter Section */}
-        {categories.length > 0 && <CategoryFilter categories={categories} selectedCategories={selectedCategories} />}
 
         {data.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -95,7 +79,7 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
                 <div className="relative h-48">
                   <Image
                     src={post.headerImageUrl || '/images/default-post.jpg'}
-                    alt={`News thumbnail ${post.id}`}
+                    alt={`Court action thumbnail ${post.id}`}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 2000px) 50vw, 33vw"
@@ -103,11 +87,9 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
                 </div>
                 <div className="p-6">
                   <div className="text-sm text-gray-500 mb-2">
-                    {post.category && (
-                      <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
-                        {post.category}
-                      </span>
-                    )}
+                    <span className="inline-block bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full mb-2">
+                      Acțiune în instanță
+                    </span>
                   </div>
                   <h2 className="text-xl font-playfair font-semibold mb-3 hover:text-blue-600">
                     <Link href={`/news/${post.id}`}>{post.title}</Link>
@@ -125,11 +107,7 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600">
-              {selectedCategories.length > 0
-                ? `Nu există știri în categoriile selectate momentan.`
-                : 'Nu există știri disponibile momentan.'}
-            </p>
+            <p className="text-gray-600">Nu există acțiuni în instanțele de judecată disponibile momentan.</p>
           </div>
         )}
 
