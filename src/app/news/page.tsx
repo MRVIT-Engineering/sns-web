@@ -6,6 +6,8 @@ import Navbar from '@/components/navigation/Navbar';
 import { NewsPagination } from '@/components/pagination/NewsPagination';
 import CategoryFilter from '@/components/news/CategoryFilter';
 
+export const revalidate = 3600;
+
 interface SearchParams {
   page?: string;
   query?: string;
@@ -22,8 +24,7 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
 
   const fetchPosts = async () => {
     try {
-      const categoryParam = selectedCategories.length > 0 ? `&categories=${selectedCategories.join(',')}` : '';
-      console.log('Category param is ', categoryParam);
+      const categoryParam = selectedCategories.length > 0 ? `&categories=${JSON.stringify(selectedCategories)}` : '';
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_API_URL}/post?page=${page}&limit=25&query=${searchQuery}${categoryParam}`,
       );
