@@ -14,6 +14,7 @@ export default async function Home() {
         throw new Error('Failed to fetch posts');
       }
       const data = await response.json();
+      console.log('Data is ', data);
       return data;
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -22,6 +23,8 @@ export default async function Home() {
   };
 
   const { data = [] } = await fetchPosts();
+
+  console.log('Data is ', data);
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
@@ -69,7 +72,7 @@ export default async function Home() {
         <main className="max-w-2xl mx-auto w-full px-4 py-16">
           {/* Recent Posts */}
           <div>
-            <h2 className="text-2xl font-playfair font-semibold mb-6">Știri Recente</h2>
+            {/* <h2 className="text-2xl font-playfair font-semibold mb-6">Știri Recente</h2> */}
             <div className="space-y-8">
               {data && data.length > 0 ? (
                 data.map((post: IPost) => (

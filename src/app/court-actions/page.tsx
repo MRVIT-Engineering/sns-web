@@ -14,14 +14,15 @@ export default async function CourtActionsPage({ searchParams }: { searchParams:
   const params = await searchParams;
   const searchQuery = params.query || '';
   const page = params.page || 1;
+  const CATEGORIES = [1];
 
   // Hardcoded category for court actions
-  const COURT_ACTIONS_CATEGORY = 'court-actions';
 
   const fetchPosts = async () => {
     try {
+      const categories = JSON.stringify(CATEGORIES);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_API_URL}/post?page=${page}&limit=25&query=${searchQuery}&category=${COURT_ACTIONS_CATEGORY}`,
+        `${process.env.NEXT_PUBLIC_BASE_API_URL}/post?page=${page}&limit=25&query=${searchQuery}&categories=${categories}`,
       );
 
       if (!response.ok) {

@@ -1,21 +1,22 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 import { IPost } from '@/models/post';
 import Navbar from '@/components/navigation/Navbar';
 import { NewsPagination } from '@/components/pagination/NewsPagination';
 
-type SearchParams = {
+interface SearchParams {
   page?: string;
   query?: string;
-};
+}
 
-export default async function ProtestePage({ searchParams }: { searchParams: Promise<SearchParams> }) {
+export default async function BenefitsPage({ searchParams }: { searchParams: Promise<SearchParams> }) {
   const params = await searchParams;
   const searchQuery = params.query || '';
   const page = params.page || 1;
-  const CATEGORIES = [2];
+  const CATEGORIES = [4];
+
+  // Hardcoded category for benefits
 
   const fetchPosts = async () => {
     try {
@@ -49,34 +50,20 @@ export default async function ProtestePage({ searchParams }: { searchParams: Pro
   };
 
   return (
-    <div className="min-h-screen font-[family-name:var(--font-geist-sans)] bg-gray-50">
-      <Suspense>
-        <Navbar showSearchBar />
-      </Suspense>
+    <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">
+      <Navbar showSearchBar />
 
       <div className="pt-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="mb-12 text-center">
-          <h1 className="text-4xl font-playfair font-bold mb-6">Acțiuni de protest</h1>
-          <p className="text-gray-700 text-lg mb-6 max-w-4xl mx-auto">
-            În scopul apărării drepturilor membrilor săi, SNS a inițiat și a participat la numeroase acțiuni de protest,
-            precum:
+          <h1 className="text-4xl font-playfair font-bold mb-4">Beneficii pentru membrii SNS</h1>
+          <p className="text-gray-600 max-w-2xl mx-auto">
+            SNS oferă membrilor săi o gamă variată de beneficii și servicii dedicate îmbunătățirii condițiilor de muncă
+            și a calității vieții profesionale în sectorul sanitar.
           </p>
-
-          <div className="text-left max-w-4xl mx-auto mb-10">
-            <h2 className="text-2xl font-semibold mb-4">Tipuri de acțiuni</h2>
-            <ul className="list-disc pl-6 text-gray-700 space-y-2">
-              <li>Greve de tip japonez, fără întreruperea programului de lucru;</li>
-              <li>Pichetări ale diverselor instituții, printre care consiliile județene și ministerele;</li>
-              <li>Mitinguri de protest în fața diverselor ministere sau a clădirii guvernului;</li>
-              <li>
-                Grevă cu întreruperea programului de lucru și cu suspendarea contractelor de muncă pe durata acesteia
-                <span className="block text-gray-500 text-sm mt-1">
-                  (precizăm faptul că SNS este singurul sindicat din cadrul ANAF care a făcut grevă, în întreaga istorie
-                  a acestei instituții)
-                </span>
-              </li>
-            </ul>
-          </div>
+          <p className="text-gray-600 max-w-2xl mx-auto mt-4">
+            De la asistență juridică specializată până la programe de dezvoltare profesională, descoperă toate
+            avantajele de care poți beneficia ca membru SNS.
+          </p>
         </div>
 
         {data.length > 0 ? (
@@ -89,7 +76,7 @@ export default async function ProtestePage({ searchParams }: { searchParams: Pro
                 <div className="relative h-48">
                   <Image
                     src={post.headerImageUrl || '/images/default-post.jpg'}
-                    alt={`Protest action thumbnail ${post.id}`}
+                    alt={`Benefits thumbnail ${post.id}`}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 2000px) 50vw, 33vw"
@@ -97,8 +84,8 @@ export default async function ProtestePage({ searchParams }: { searchParams: Pro
                 </div>
                 <div className="p-6">
                   <div className="text-sm text-gray-500 mb-2">
-                    <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
-                      Acțiune de protest
+                    <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mb-2">
+                      Beneficii
                     </span>
                   </div>
                   <h2 className="text-xl font-playfair font-semibold mb-3 hover:text-blue-600">
@@ -117,13 +104,11 @@ export default async function ProtestePage({ searchParams }: { searchParams: Pro
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-gray-600">Nu există acțiuni de protest disponibile momentan.</p>
+            <p className="text-gray-600">Nu există beneficii disponibile momentan.</p>
           </div>
         )}
 
-        <div className="pb-16">
-          <NewsPagination count={total} />
-        </div>
+        <NewsPagination count={total} />
       </div>
     </div>
   );

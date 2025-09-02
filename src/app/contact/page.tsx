@@ -48,7 +48,7 @@ export default function ContactPage() {
                   <p>
                     Telefon:{' '}
                     <a href="tel:+40123456789" className="text-blue-600 hover:text-blue-700">
-                      +40 732 717 194
+                      +40 744 580 703
                     </a>
                   </p>
                   <p>

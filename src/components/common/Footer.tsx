@@ -120,14 +120,7 @@ export default function Footer() {
             <p className="text-gray-500 text-sm">
               © {new Date().getFullYear()} Sindicatul Național Solidaritatea. Toate drepturile rezervate.
             </p>
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              <Link href="/privacy" className="text-gray-500 hover:text-blue-600 text-sm">
-                Politica de Confidențialitate
-              </Link>
-              <Link href="/terms" className="text-gray-500 hover:text-blue-600 text-sm">
-                Termeni și Condiții
-              </Link>
-            </div>
+            <div className="flex space-x-6 mt-4 md:mt-0"></div>
           </div>
         </div>
       </div>

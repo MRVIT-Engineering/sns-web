@@ -125,8 +125,7 @@ export default function Navbar({ showSearchBar = false }: Props) {
       dropdown: [
         { text: 'Actiuni in instantele de judecata', href: '/court-actions' },
         { text: 'Actiuni de protest', href: '/proteste' },
-        { text: 'Altele ( statut )', href: '/statut' },
-        { text: 'Altele', href: '/wip' },
+        { text: 'Beneficii oferite membrilor', href: '/benefits' },
       ],
     },
     {
@@ -134,16 +133,12 @@ export default function Navbar({ showSearchBar = false }: Props) {
       href: '/news',
       dropdown: [
         { text: 'Informatii pentru membrii', href: '/wip' },
-        { text: 'Altele', href: '/news' },
+        { text: 'Informatii generale', href: '/news' },
       ],
     },
     {
       text: 'Contact',
       href: '/contact',
-      dropdown: [
-        { text: 'Intreaba SNS', href: '/contact' },
-        { text: 'Altele', href: '/contact' },
-      ],
     },
   ];
 
