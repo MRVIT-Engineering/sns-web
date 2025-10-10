@@ -62,8 +62,6 @@ export default async function NewsPage({ searchParams }: { searchParams: Promise
 
   const [{ data = [], total = 0 }, categories] = await Promise.all([fetchPosts(), fetchCategories()]);
 
-  console.log('Data is ', data);
-
   const calculateReadTime = (post: IPost) => {
     const wordsPerMinute = 200;
     const wordCount = post.content.split(' ').length;

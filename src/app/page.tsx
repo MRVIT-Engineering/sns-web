@@ -14,7 +14,6 @@ export default async function Home() {
         throw new Error('Failed to fetch posts');
       }
       const data = await response.json();
-      console.log('Data is ', data);
       return data;
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -23,8 +22,6 @@ export default async function Home() {
   };
 
   const { data = [] } = await fetchPosts();
-
-  console.log('Data is ', data);
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-geist-sans)]">

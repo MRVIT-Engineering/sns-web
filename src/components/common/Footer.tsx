@@ -107,7 +107,7 @@ export default function Footer() {
                   />
                 </svg>
                 <a href="tel:+40732717194" className="hover:text-blue-600">
-                  +40 732 717 194
+                  +40 744 580 703
                 </a>
               </li>
             </ul>
