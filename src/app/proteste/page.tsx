@@ -15,7 +15,7 @@ export default async function ProtestePage({ searchParams }: { searchParams: Pro
   const params = await searchParams;
   const searchQuery = params.query || '';
   const page = params.page || 1;
-  const CATEGORIES = [2];
+  const CATEGORIES = [6];
 
   const fetchPosts = async () => {
     try {

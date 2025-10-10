@@ -14,7 +14,7 @@ export default async function CourtActionsPage({ searchParams }: { searchParams:
   const params = await searchParams;
   const searchQuery = params.query || '';
   const page = params.page || 1;
-  const CATEGORIES = [1];
+  const CATEGORIES = [4];
 
   // Hardcoded category for court actions
 

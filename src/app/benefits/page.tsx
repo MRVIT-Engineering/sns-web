@@ -14,7 +14,7 @@ export default async function BenefitsPage({ searchParams }: { searchParams: Pro
   const params = await searchParams;
   const searchQuery = params.query || '';
   const page = params.page || 1;
-  const CATEGORIES = [4];
+  const CATEGORIES = [7];
 
   // Hardcoded category for benefits
 
