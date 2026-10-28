@@ -6,6 +6,8 @@ import Head from 'next/head';
 import Navbar from '@/components/navigation/Navbar';
 import { IPost } from '@/models/post';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const fetchPosts = async () => {
     try {
